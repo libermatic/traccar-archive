@@ -1,0 +1,15 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --tag=asia.gcr.io/$PROJECT_ID/traccar-archive
+      - .
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - tag
+      - asia.gcr.io/$PROJECT_ID/traccar-archive
+      - asia.gcr.io/$PROJECT_ID/traccar-archive:$TAG_NAME
+
+images:
+  - asia.gcr.io/$PROJECT_ID/traccar-archive:$TAG_NAME
+  - asia.gcr.io/$PROJECT_ID/traccar-archive:latest
