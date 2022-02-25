@@ -7,7 +7,7 @@ RUN set -x \
     && rm -rf /var/cache/apk/* /tmp/pt-archiver
 
 COPY ./requirements.txt /tmp/requirements.txt
-RUN pip3 install -r /tmp/requirements.txt
+RUN pip3 install -r /tmp/requirements.txt --no-cache-dir
 
 COPY ./app /app
 WORKDIR /app
