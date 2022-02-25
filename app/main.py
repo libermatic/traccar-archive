@@ -100,5 +100,6 @@ def _get_config(key: str) -> Dict:
 
 
 if __name__ == "__main__":
-    to_date = datetime.now() - timedelta(days=180)
+    days_past = int(os.getenv("DAYS_PAST", "180"))
+    to_date = datetime.now() - timedelta(days=days_past)
     archive(to_date)
