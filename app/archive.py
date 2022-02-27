@@ -51,7 +51,7 @@ def archive(to_date: datetime):
         result = subprocess.run(command, shell=True, stderr=subprocess.PIPE)
         if result.returncode != 0:
             raise Exception(
-                f"Return code: {result.returncode}, Error: {result.stderr.decode('utf-8')}"
+                f"Code: {result.returncode}, Message: {result.stderr.decode('utf-8')}"
             )
 
         if os.path.exists(infile):
