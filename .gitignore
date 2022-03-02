@@ -1,3 +1,4 @@
 .config/
 .data/
 venv/
+__pycache__
