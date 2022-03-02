@@ -46,7 +46,7 @@ def archive(to_date: datetime):
         ]
         filename = f"{dsn_config['database']}_{table}_{date_str}"
         infile = f"{path_prefix}/{filename}"
-        date_clause = f'DATE({time_field}) < "{to_date.strftime("%Y-%m-%d")}"'
+        date_clause = f'DATE({time_field}) <= "{to_date.strftime("%Y-%m-%d")}"'
         command = _get_command(",".join(dsn), infile, f"{date_clause} AND ({query})")
 
         logging.info(f"Dumping {dsn_config['database']}.{table}")
