@@ -1,12 +1,16 @@
 import logging
 import os
+import sys
 from datetime import datetime, timedelta
 
 from archive import archive
 
-if os.getenv("DEBUG"):
-    logging.basicConfig(format="%(asctime)s %(levelname)-8s %(message)s")
-    logging.getLogger().setLevel(logging.INFO)
+logging.basicConfig(
+    format="%(asctime)s %(levelname)-8s %(message)s"
+    if os.getenv("DEBUG")
+    else "%(levelname)-8s %(message)s",
+    stream=sys.stdout,
+)
 
 
 if __name__ == "__main__":
