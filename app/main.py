@@ -10,6 +10,7 @@ logging.basicConfig(
     if os.getenv("DEBUG")
     else "%(levelname)-8s %(message)s",
     stream=sys.stdout,
+    level=logging.INFO,
 )
 
 
