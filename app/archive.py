@@ -13,10 +13,18 @@ from google.cloud import storage
 logging.basicConfig(format="%(asctime)s %(levelname)-8s %(message)s")
 logging.getLogger().setLevel(logging.INFO)
 
-
+_positionid_subquery = "SELECT positionid FROM tc_devices WHERE positionid IS NOT NULL"
 tables = [
-    ("tc_positions", "servertime", "id"),
-    ("tc_events", "eventtime", "positionid"),
+    (
+        "tc_positions",
+        "servertime",
+        f"id NOT IN ({_positionid_subquery})",
+    ),
+    (
+        "tc_events",
+        "eventtime",
+        f"positionid IS NULL OR positionid NOT IN ({_positionid_subquery})",
+    ),
 ]
 path_prefix = "/tmp"
 
@@ -31,7 +39,7 @@ def archive(to_date: datetime):
     storage_client = storage.Client()
     bucket = storage_client.bucket(gcs_config["bucket"])
 
-    for table, time_field, pos_field in tables:
+    for table, time_field, query in tables:
         dsn = [
             f"h={dsn_config['host']}",
             f"u={dsn_config['user']}",
@@ -41,11 +49,8 @@ def archive(to_date: datetime):
         ]
         filename = f"{dsn_config['database']}_{table}_{date_str}"
         infile = f"{path_prefix}/{filename}"
-        clauses = [
-            f'DATE({time_field}) < "{to_date.strftime("%Y-%m-%d")}"',
-            f"{pos_field} NOT IN (SELECT positionid FROM tc_devices WHERE positionid IS NOT NULL)",
-        ]
-        command = _get_command(",".join(dsn), infile, " AND ".join(clauses))
+        date_clause = f'DATE({time_field}) < "{to_date.strftime("%Y-%m-%d")}"'
+        command = _get_command(",".join(dsn), infile, f"{date_clause} AND ({query})")
 
         logging.info(f"Dumping {dsn_config['database']}.{table}")
         result = subprocess.run(command, shell=True, stderr=subprocess.PIPE)
