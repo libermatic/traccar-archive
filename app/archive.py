@@ -10,9 +10,6 @@ from typing import Dict
 from google.cloud import storage
 
 
-logging.basicConfig(format="%(asctime)s %(levelname)-8s %(message)s")
-logging.getLogger().setLevel(logging.INFO)
-
 _positionid_subquery = "SELECT positionid FROM tc_devices WHERE positionid IS NOT NULL"
 tables = [
     (

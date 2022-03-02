@@ -1,7 +1,11 @@
+import logging
 import os
 from datetime import datetime, timedelta
 
 from archive import archive
+
+logging.basicConfig(format="%(asctime)s %(levelname)-8s %(message)s")
+logging.getLogger().setLevel(logging.INFO)
 
 
 if __name__ == "__main__":
