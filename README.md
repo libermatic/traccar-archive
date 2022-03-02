@@ -4,7 +4,7 @@ Use `pt-archiver` to archive `tc_positions` and `tc_events` rows past a given da
 
 ## Environment variables
 
-- `PAST_DAYS`: number of before before which data will be archived. Default `180`.
+- `DAYS_PAST`: number of before before which data will be archived. Default `180`.
 - `DSN_CONF`: path of the _mysql_ creds
 - `GCS_CONF`: path of the _Google Cloud Storage_ config
 - `GOOGLE_APPLICATION_CREDENTIALS`: path of the _Google_ service account creds
