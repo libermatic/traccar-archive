@@ -82,6 +82,7 @@ def _get_command(dsn: str, file: str, where: str) -> str:
             --limit 100 \
             --commit-each \
             --optimize s \
+            --set-vars 'wait_timeout=10000,sql_mode=ALLOW_INVALID_DATES' \
             --skip-foreign-key-checks \
             --no-check-charset
     """
